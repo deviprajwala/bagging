@@ -4,7 +4,7 @@
 #include<vector>//vector is included so that we can make use of it which is in standard library.
 #include<set> //set is included so that we can make use of it which is in standard library.
 #include<stdlib.h>
-
+#include<string>
 
 using namespace std;
  
@@ -98,6 +98,8 @@ return child;
 }
 
 void print_nodes(struct node* root)
+//this function is used to generate a digraph.The statements written by this function is redirected to 
+//dot so that the nodes can be pictorially represented
 {
   struct node* cur;
   cur=root;
@@ -105,24 +107,24 @@ void print_nodes(struct node* root)
   cout<<"digraph G {"<<"\n";
   while(cur!=NULL)
   {
-    if(cur->rchild!=NULL)
+    if(cur->rchild!=NULL)//checks whether there exits any right child or not 
      {
        cout<<cur->label<<"1"<<"->"<<cur->rchild->label<<"0";
        cout<<"[ label=\"yes\"];"<<"\n";
      }
-    if(cur->rchild->class_label!=NULL)
+    if(cur->rchild->class_label!=NULL)//checks if the right child corresponds to a class label or not
      {
        cout<<cur->rchild->label<<"1"<<"->"<<cur->rchild->class_label->label;
        cout<<"[ label=\"class\"];"<<"\n";
        cout<<cur->rchild->class_label->label<<"[ shape=rectangle]"<<"\n";
      }
-    if(cur->lchild!=NULL)
+    if(cur->lchild!=NULL)//checks whether there exits any left child or not 
      {
        cout<<cur->label<<"1"<<"->"<<cur->lchild->label<<"1";
        cout<<"[ label=\"no\"];"<<"\n";
        
      }
-    if(cur->lchild->class_label!=NULL)
+    if(cur->lchild->class_label!=NULL)//checks if the left child corresponds to a class label or not
      {
        cout<<cur->lchild->label<<"0"<<"->"<<cur->lchild->class_label->label;
        cout<<"[ label=\"class\"];"<<"\n";
@@ -130,7 +132,7 @@ void print_nodes(struct node* root)
      }
      if(cur->rchild->rchild!=NULL)
      {
-     cur=cur->rchild;
+     cur=cur->rchild;//traverse through right if its not null
      }
      else
      {
@@ -140,23 +142,23 @@ void print_nodes(struct node* root)
   cur=root->lchild;
   while(cur!=NULL)
   {
-    if(cur->rchild!=NULL)
+    if(cur->rchild!=NULL)//checks whether there exits any right child or not
      {
        cout<<cur->label<<"0"<<"->"<<cur->rchild->label<<"0";
        cout<<"[ label=\"yes\"];"<<"\n";
      }
-    if(cur->rchild->class_label!=NULL)
+    if(cur->rchild->class_label!=NULL)//checks if the right child corresponds to a class label or not
      {
        cout<<cur->rchild->label<<"1"<<"->"<<cur->rchild->class_label->label;
        cout<<"[ label=\"class\"];"<<"\n";
        cout<<cur->rchild->class_label->label<<"[ shape=rectangle]"<<"\n";
      }
-    if(cur->lchild!=NULL)
+    if(cur->lchild!=NULL)//checks whether there exits any left child or not 
      {
        cout<<cur->label<<"0"<<"->"<<cur->lchild->label<<"1";
        cout<<"[ label=\"no\"];"<<"\n";
      }
-    if(cur->lchild->class_label!=NULL)
+    if(cur->lchild->class_label!=NULL)//checks if the left child corresponds to a class label or not
      {
        cout<<cur->lchild->label<<"0"<<"->"<<cur->lchild->class_label->label;
        cout<<"[ label=\"class\"];"<<"\n";
@@ -164,7 +166,7 @@ void print_nodes(struct node* root)
      }
      if(cur->lchild->lchild!=NULL)
      {
-     cur=cur->lchild;
+     cur=cur->lchild;//traverse through left if its not null
      }
      else
      {
@@ -174,7 +176,142 @@ void print_nodes(struct node* root)
   cout<<"}"<<"\n";
 }
 
+string get_class(struct node* root)
+//this function helps us to get the label of the class when the information regarding thier attributes is entered.It will check the conditions which will be satisfied and traverse through the node to arrive 
+//at a particular class label and return it to the calling function.
+{
+  struct node* cur;
+  cur=root;
+  int bt,gb,ae,aq,lg,hb;
+  //cout <<"\nbody temperature warm-1,cold-0\n";
+  cin >> bt;
+ 
+  //cout<<"\ngives birth yes-1 no-0\n";
+  cin >> gb;
+  
+  //cout<<"\naerial yes-1 no-0\n";
+  cin >> ae;
+ 
+  //cout<<"\naquatic yes-1 no-0\n";
+  cin >> aq;
+ 
+  //cout<<"\nhas legs yes-1 no-0\n";
+  cin >> lg;
+  
+  //cout <<"\nhibernates yes-1 no-0\n";
+  cin >> hb;
+ 
 
+label1:
+  {
+    if(cur->rchild->label=="bodytemperature")//checks if the label is body temperature and proceeds
+    {
+      if(bt==0)//if it's 0 then move towards right
+      {
+        cur=cur->rchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+      else if(bt==1)//if it's 1 then move towards left
+      {
+        cur=cur->lchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+    }
+    if(cur->rchild->label=="givesbirth")//checks if the label is gives birth and proceeds
+    {
+       if(gb==0)//if it's 0 then move towards right
+      {
+        cur=cur->rchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+      else if(gb==1)//if it's 1 then move towards left
+      {
+        cur=cur->lchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+    }
+    if(cur->rchild->label=="aerial")//checks if the label is aerial and proceeds
+    {
+       if(ae==0)//if it's 0 then move towards right
+      {
+        cur=cur->rchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+      else if(ae==1)//if it's 1 then move towards left
+      {
+        cur=cur->lchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+    }
+    if(cur->rchild->label=="aquatic")//checks if the label is aquatic and proceeds
+    {
+       if(aq==0)//if it's 0 then move towards right
+      {
+        cur=cur->rchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+      else if(aq==1)//if it's 1 then move towards left
+      {
+        cur=cur->lchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+    }
+    if(cur->rchild->label=="legs")//checks if the label is leg and proceeds
+    {
+       if(lg==0)//if it's 0 then move towards right
+      {
+        cur=cur->rchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+      else if(lg==1)//if it's 1 then move towards left
+      {
+        cur=cur->lchild;
+        if(cur->class_label!=NULL)//if the label is obtained then return it
+        {
+            //cout<<cur->class_label->label;
+            return cur->class_label->label;
+        }
+      }
+    }
+   }
+   goto label1;
+}
 class animals
 // we define a class named animals which contains the data records and the functions which can be performed on the available data set
 {
@@ -695,11 +832,14 @@ struct data_record animals :: splitting(map <int,int>&m1,int i)
 
 int main()
 {
- string str;
+ //cout<<"enter the number of data set";
+ int x;//number of data sets
+ cin>>x;
  //cout<<"enter the value of n";
  //here n is the number of data points which are present in the data set.
  cin>>n;
  animals m;
+ 
  m.input(n,m.data.name);
  m.input(n,m.data.body_temperature);
  m.input(n,m.data.gives_birth);
@@ -716,8 +856,9 @@ int main()
  //m.print(legs);
  //m.print(hibernates);
  //m.print(m.label);
- 
+
  cin>>label_num;//to get the number of labels
+ string str;
  for(int j=1;j<=label_num;j++)
  {
    cin>>str;
@@ -733,9 +874,8 @@ int main()
    //cout<<atribute[i]<<"  "<<i;
   }
 
-  //cout<<"enter the number of data set";
-  int x;//number of data sets
-  cin>>x;
+  
+  
   struct node *rooti;
   for(int i=0;i<x;i++)
   {
@@ -747,55 +887,10 @@ int main()
   rooti=newnode("start",100);//node is allocated
   rooti=m.tree_growth(m.atribute,m.data,rooti);//tree growth function is called
   }
-  
-   /*
-   //cout<<rooti->label;
-   //cout<<rooti->lchild->label<<"  ";
-   //cout<<rooti->lchild->lchild->label<<"   ";
-   //cout<<rooti->lchild->lchild->class_label->label<<"   ";
-   //cout<<rooti->lchild->rchild->class_label->label<<"   ";
-   //cout<<rooti->rchild->lchild->class_label->label<<"   ";//amphibian
-   //cout<<rooti->rchild->rchild->rchild->class_label->label;//reptile
-   //cout<<rooti->rchild->rchild->lchild->class_label->label;//fish
-   */   
+ string clas; 
+ //print_nodes(rooti);
+ clas=get_class(rooti); 
+ cout<<clas<<"\n";
 
-  /*these are redirected for the construction of the diagraph for the pictorial representation
-   
-   cout<<"digraph G {"<<"\n";
-   cout<<rooti->label<<"->"<<rooti->lchild->label<<"warm"<<"\n";
- 
-
-   cout<<rooti->label<<"->"<<rooti->rchild->label<<"cold"<<"\n";
-   cout<<rooti->lchild->label<<"warm"<<"->"<<rooti->lchild->lchild->label<<"yes"<<"\n";
-   cout<<rooti->lchild->label<<"warm"<<"->"<<rooti->lchild->rchild->label<<"no"<<"\n";
-   cout<<rooti->lchild->lchild->label<<"yes"<<"->"<<rooti->lchild->lchild->class_label->label<<"\n";
-   cout<<rooti->lchild->lchild->label<<"no"<<"->"<<rooti->lchild->rchild->class_label->label<<"\n";
-
-   cout<<rooti->rchild->label<<"cold"<<"->"<<rooti->rchild->lchild->label<<"yes"<<"\n";
-   cout<<rooti->rchild->label<<"cold"<<"->"<<rooti->rchild->rchild->label<<"no"<<"\n";
-
-   cout<<rooti->rchild->lchild->label<<"yes"<<"->"<<rooti->rchild->lchild->class_label->label;
-   
-   cout<<"\n"<<rooti->rchild->rchild->label<<"no"<<"->";
-   cout<<rooti->rchild->rchild->lchild->label<<"yes";
-   cout<<"\n"<<rooti->rchild->rchild->label<<"no"<<"->";
-   cout<<rooti->rchild->rchild->lchild->label<<"no"<<"\n";
-   
-   cout<<rooti->rchild->rchild->lchild->label<<"yes"<<"->";
-   cout<<rooti->rchild->rchild->lchild->class_label->label<<"\n";
-
-   cout<<rooti->rchild->rchild->lchild->label<<"no"<<"->";
-   cout<<rooti->rchild->rchild->rchild->class_label->label<<"\n";
-
-
-   cout<<rooti->rchild->rchild->rchild->class_label->label;
-   cout<<"[ shape=rectangle]"<<"\n";
-   cout<<rooti->rchild->rchild->lchild->class_label->label<<"\n";
-   cout<<"[ shape=rectangle]"<<"\n";
-   cout<<rooti->rchild->lchild->class_label->label<<"[ shape=rectangle]"<<"\n";
-   cout<<rooti->lchild->lchild->class_label->label<<"[ shape=rectangle]"<<"\n";
-   cout<<rooti->lchild->rchild->class_label->label<<"[ shape=rectangle]"<<"\n";
-   cout<<"}";*/
- print_nodes(rooti);  
  return(0); 
 }
